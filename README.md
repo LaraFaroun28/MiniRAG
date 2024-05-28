@@ -29,3 +29,7 @@ This is a minimul implementation of Rag Model for  questoin answering.
 #### cp .env.example .env
 
 Setup your environment variables in '.env' file.
+
+## Run the FastAPI server
+
+#### uvicorn main:app --reload --host 0.0.0.0 --port 5000

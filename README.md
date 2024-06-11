@@ -17,7 +17,7 @@ This is a minimul implementation of Rag Model for  questoin answering.
 
 - Activate the anvironment:
 
-#### conda activate mini-rag
+#### conda activate mini-RAG-app
 
 
 ## Installation

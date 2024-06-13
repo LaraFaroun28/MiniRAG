@@ -12,26 +12,30 @@ class DataController(BaseController):
         self.size_scale = 1048576 
 
     def validate_uploaded_file(self, file:UploadFile):
+
         if file.content_type  not in self.app_settings.FILE_ALLOWD_TYPES:
             return False , ResponseSignal.FTLE_TYPE_NOT_SUPPORTED.value
+        
         if file.size > self.app_settings.FILE_MAX_SIZE*self.size_scale:
             return False , ResponseSignal.FILE_SIZE_EXEEDED.value
         
         return True , ResponseSignal.FILE_UPLOAD_SUCCESS.value
     
-    def generate_unique_filename (self , original_filename:str,prject_id:str):
-        random_filename = self.generatr_random_string(length=12)
+    def generate_unique_filepath (self , original_filename:str,prject_id:str):
+
+        random_key = self.generatr_random_string(length=12)
+        
         project_path = ProjectController().get_project_path(project_id= prject_id)
 
         clean_file_name = self.get_clean_filename(orginal_filenama= original_filename)
 
-        new_file_path = os.path.join (project_path, random_filename+"_"+clean_file_name)
+        new_file_path = os.path.join (project_path, random_key+"_"+clean_file_name)
 
         while os.path.exists(new_file_path):
-            random_filename = self.generatr_random_string()
-            new_file_path = os.path.join (project_path, random_filename+"_"+clean_file_name)
+            random_key = self.generatr_random_string()
+            new_file_path = os.path.join (project_path, random_key+"_"+clean_file_name)
 
-        return new_file_path
+        return new_file_path , random_key+"_"+clean_file_name
     
     def get_clean_filename(self , orginal_filenama:str):
         
